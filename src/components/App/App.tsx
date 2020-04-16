@@ -1,39 +1,92 @@
-import React from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import s from './App.scss';
+import React from "react";
+import {
+  Page,
+  Breadcrumbs,
+  Button,
+  Row,
+  Col,
+  Container,
+  CardGalleryItem,
+  Proportion,
+  AddItem
+} from "wix-style-react";
 
-/* <-- To remove demo stuff just copy-paste:
-  \{?/\*\s?<--([\n\n]|.)*?-->\s?\*\/\}?
-  to your search input with RegExp enabled and remove everything matched.
---> */
-
-interface AppProps extends WithTranslation {}
-
-class App extends React.Component<AppProps> {
-  /* <-- Feel free to remove this lifecycle hook and state */
-  /* <-- Please also remove `yoshi-template-intro` from your package.json */
-  state = {
-    TemplateIntro: () => null,
-  };
-  async componentDidMount() {
-    const { default: TemplateIntro } = await import('yoshi-template-intro');
-    this.setState({ TemplateIntro });
-  } /* --> */
-
-  render() {
-    const { t } = this.props;
+class App extends React.Component {
+  renderHeader() {
+    const ActionBar = () => {
+      return <Button>Save</Button>;
+    };
 
     return (
-      <div className={s.root}>
-        <h2 className={s.title} data-testid="app-title">
-          {t('app.title')}
-        </h2>
-        {/* <-- Feel free to remove TemplateIntro */}
-        <this.state.TemplateIntro />
-        {/* --> */}
-      </div>
+      <Page.Header
+        title="Page Title"
+        breadcrumbs={
+          <Breadcrumbs
+            items={[1, 2, 3].map(i => ({ id: `${i}`, value: `Page ${i}` }))}
+            activeId="3"
+            size="medium"
+            theme="onGrayBackground"
+            onClick={() => {}}
+          />
+        }
+        actionsBar={<ActionBar />}
+      />
+    );
+  }
+
+  renderCardGalleryItem() {
+    const backgroundImageUrl =
+      "https://images.unsplash.com/photo-1562887284-8ba6b7c90fd8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2900&q=80";
+
+    return (
+      <CardGalleryItem
+        title={"Card Title"}
+        subtitle={"Card subtitle"}
+        primaryActionProps={{
+          label: "Button",
+          onClick: () => {
+            alert("Primary action clicked");
+          }
+        }}
+        secondaryActionProps={{
+          label: "Text link",
+          onClick: () => {
+            alert("Secondary action clicked");
+          }
+        }}
+        backgroundImageUrl={backgroundImageUrl}
+        data-hook="storybook-card-gallery-item"
+      />
+    );
+  }
+
+  render() {
+    return (
+      <Page height="100vh">
+        {this.renderHeader()}
+        <Page.Content>
+          <Container>
+            {Array.from(Array(2).keys()).map(rowKey => (
+              <Row key={rowKey}>
+                {Array.from(Array(3).keys()).map(colKey => (
+                  <Col key={colKey} span={4}>
+                    {this.renderCardGalleryItem()}
+                  </Col>
+                ))}
+              </Row>
+            ))}
+            <Row>
+              <Col span={4}>
+                <Proportion>
+                  <AddItem size="large">Add Item</AddItem>
+                </Proportion>
+              </Col>
+            </Row>
+          </Container>
+        </Page.Content>
+      </Page>
     );
   }
 }
 
-export default withTranslation()(App);
+export default App;

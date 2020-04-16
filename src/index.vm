@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>${title}</title>
-    <link type="image/png" href="https://www.wix.com/favicon.ico" rel="shortcut icon">
-    <link rel="stylesheet" href="${clientTopology.staticsBaseUrl}app#if(!${debug}).min#{end}.css">
+    <link
+      type="image/png"
+      href="https://www.wix.com/favicon.ico"
+      rel="shortcut icon"
+    />
+    <link
+      rel="stylesheet"
+      href="${clientTopology.staticsBaseUrl}app#if(!${debug}).min#{end}.css"
+    />
 
     <!-- Run `npx add-sentry -p small -t [TEAM]` to add a valid Sentry link. More information at: https://github.com/wix-private/fed-infra/tree/master/add-sentry -->
 
@@ -13,11 +20,10 @@
     <script src="https://${clientTopology.staticsDomain}/unpkg/react-dom@16.12.0/umd/react-dom#if(!${debug}).production.min#{else}.development#{end}.js"></script>
   </head>
   <body>
-    <div id="visit-count">Visit count: ${visitCount}</div>
     <div id="root"></div>
     <script>
-      window.__BASEURL__ = '${basename}';
-      window.__LOCALE__ = '${locale}';
+      window.__BASEURL__ = "${basename}";
+      window.__LOCALE__ = "${locale}";
     </script>
     <script src="${clientTopology.staticsBaseUrl}app.bundle#if(!${debug}).min#{end}.js"></script>
   </body>
